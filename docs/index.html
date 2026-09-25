@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moyennes pour PRONOTE</title>
+  <meta name="description" content="Extension navigateur qui calcule la moyenne par matière et la moyenne générale dans PRONOTE lorsque l'établissement ne les affiche pas.">
+  <link rel="icon" href="icon-128.png">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231f;
+      --muted: #52635d;
+      --green: #14765f;
+      --green-soft: #e7f3ef;
+      --line: #ccd8d4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f6f8f7;
+      font-family: "Segoe UI", Candara, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(780px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 72px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 28px;
+      border-bottom: 2px solid var(--green);
+    }
+
+    header img { width: 84px; height: 84px; }
+
+    h1 {
+      margin: 0;
+      font-size: 2.4rem;
+      line-height: 1.1;
+    }
+
+    .tagline { margin: 6px 0 0; color: var(--muted); }
+
+    h2 {
+      margin: 36px 0 12px;
+      font-size: 1.35rem;
+    }
+
+    ul { padding-left: 1.3rem; }
+    li + li { margin-top: 6px; }
+
+    .note {
+      padding: 16px 18px;
+      background: var(--green-soft);
+      border-left: 4px solid var(--green);
+      border-radius: 4px;
+    }
+
+    a { color: #14607f; }
+
+    footer {
+      margin-top: 44px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img src="icon-128.png" alt="">
+      <div>
+        <h1>Moyennes pour PRONOTE</h1>
+        <p class="tagline">Moyenne par matière et moyenne générale, calculées dans votre navigateur.</p>
+      </div>
+    </header>
+
+    <p class="note">Cette extension n'est utile que si votre établissement <strong>n'affiche pas les moyennes</strong> sur l'Espace Parents ou l'Espace Élèves. Si elles sont déjà visibles dans PRONOTE, ce sont elles qui font foi.</p>
+
+    <h2>Pourquoi les moyennes sont parfois absentes</h2>
+    <p>Plusieurs réglages de PRONOTE, décidés par l'établissement, peuvent les masquer :</p>
+    <ul>
+      <li>l'option « Ne pas afficher la moyenne générale », activable pour tout l'établissement ;</li>
+      <li>la date de publication du relevé de notes, qui contient les moyennes ;</li>
+      <li>la page « Relevé » qui peut ne pas être publiée sur les Espaces ;</li>
+      <li>la publication des notes différée sur l'Espace Parents par rapport à l'Espace Élèves.</li>
+    </ul>
+    <p>Ces choix visent souvent à limiter la comparaison entre élèves et le stress lié aux notes.</p>
+
+    <h2>Ce que fait l'extension</h2>
+    <ul>
+      <li>elle ramène chaque note sur 20 selon le barème affiché ;</li>
+      <li>elle calcule la moyenne de chaque matière ;</li>
+      <li>elle calcule la moyenne générale à partir des moyennes de matières.</li>
+    </ul>
+    <p>Chaque note et chaque matière ont le même poids. PRONOTE applique, lui, les coefficients définis par les professeurs. Les valeurs affichées sont donc une <strong>estimation</strong>.</p>
+
+    <h2>Confidentialité</h2>
+    <p>L'extension fonctionne entièrement dans le navigateur. Elle ne collecte, n'enregistre et ne transmet aucune donnée, et ne demande aucune permission.</p>
+    <p><a href="confidentialite.html">Lire la politique de confidentialité</a></p>
+
+    <h2>Installation</h2>
+    <p>Les versions et le guide d'installation pas à pas sont disponibles sur le <a href="https://github.com/SpartisPerso/moyennes-pour-pronote">dépôt du projet</a>.</p>
+
+    <h2>Assistance</h2>
+    <p><a href="mailto:spartis.dev@outlook.com">spartis.dev@outlook.com</a></p>
+
+    <footer>
+      <p>Projet indépendant. Ni édité, ni approuvé, ni soutenu par Index Éducation. PRONOTE est une marque déposée d'Index Éducation.</p>
+    </footer>
+  </main>
+</body>
+</html>

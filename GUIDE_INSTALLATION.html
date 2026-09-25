@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Installer Moyennes pour PRONOTE</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231f;
+      --muted: #52635d;
+      --green: #14765f;
+      --green-soft: #e7f3ef;
+      --amber: #a05a12;
+      --amber-soft: #fff2db;
+      --line: #ccd8d4;
+      --paper: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background-color: #f3f6f5;
+      background-image: repeating-linear-gradient(135deg, transparent 0 22px, rgb(20 118 95 / 3%) 22px 23px);
+      font-family: Candara, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    main {
+      width: min(860px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 64px;
+    }
+
+    header {
+      padding: 0 0 28px;
+      border-bottom: 2px solid var(--green);
+    }
+
+    h1,
+    h2 {
+      font-family: Bahnschrift, "Segoe UI Variable", sans-serif;
+      font-weight: 650;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 3rem;
+      line-height: 1.05;
+    }
+
+    .intro {
+      max-width: 650px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .notice {
+      margin: 24px 0 0;
+      padding: 14px 16px;
+      color: #673a0c;
+      background: var(--amber-soft);
+      border-left: 4px solid var(--amber);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 18px;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .number {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      color: #ffffff;
+      background: var(--green);
+      border-radius: 50%;
+      font-family: Bahnschrift, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+      line-height: 1.25;
+    }
+
+    p,
+    ol {
+      margin-top: 0;
+    }
+
+    ol {
+      padding-left: 1.35rem;
+    }
+
+    li + li {
+      margin-top: 9px;
+    }
+
+    .mock {
+      margin-top: 16px;
+      padding: 15px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      box-shadow: 0 2px 7px rgb(23 35 31 / 8%);
+    }
+
+    .mock-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-weight: 700;
+    }
+
+    .switch {
+      position: relative;
+      flex: 0 0 auto;
+      width: 46px;
+      height: 24px;
+      background: var(--green);
+      border-radius: 20px;
+    }
+
+    .switch::after {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 18px;
+      height: 18px;
+      content: "";
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    .mock-button {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 9px 13px;
+      color: #ffffff;
+      background: #365f9d;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    .folder-tree {
+      margin: 16px 0;
+      padding: 14px 16px;
+      overflow-wrap: anywhere;
+      color: #20322c;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .folder-tree strong {
+      color: var(--green);
+    }
+
+    .picker {
+      margin: 16px 0;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid #9eaca7;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgb(23 35 31 / 14%);
+      font-size: 0.92rem;
+    }
+
+    .picker-title {
+      padding: 10px 14px;
+      background: #eef1f0;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    .picker-path {
+      padding: 9px 14px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      font-size: 0.86rem;
+      overflow-wrap: anywhere;
+    }
+
+    .picker-list {
+      margin: 0;
+      padding: 6px;
+      list-style: none;
+    }
+
+    .picker-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 3px;
+      overflow-wrap: anywhere;
+    }
+
+    .picker-item + .picker-item {
+      margin-top: 2px;
+    }
+
+    .picker-item.is-selected {
+      background: #d8ebe4;
+      border: 1px solid var(--green);
+      font-weight: 700;
+    }
+
+    .picker-item svg {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+    }
+
+    .icon-folder {
+      fill: #d8a53a;
+    }
+
+    .icon-file {
+      fill: #97a5a0;
+    }
+
+    .picker-note {
+      margin-left: auto;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .picker-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #f6f8f7;
+      border-top: 1px solid var(--line);
+    }
+
+    .picker-actions span {
+      padding: 8px 14px;
+      border: 1px solid #9eaca7;
+      border-radius: 3px;
+      font-size: 0.88rem;
+    }
+
+    .picker-actions .is-primary {
+      color: #ffffff;
+      background: #365f9d;
+      border-color: #365f9d;
+      font-weight: 700;
+    }
+
+    .path-box {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--green-soft);
+      border: 1px solid #acd0c5;
+      border-radius: 4px;
+    }
+
+    .path-value {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-family: Consolas, monospace;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .copy-button {
+      padding: 10px 13px;
+      color: #ffffff;
+      background: var(--green);
+      border: 0;
+      border-radius: 3px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .copy-button:hover {
+      background: #0d5a46;
+    }
+
+    .copy-status {
+      min-height: 1.5em;
+      margin: 7px 0 0;
+      color: #0d5a46;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    kbd {
+      display: inline-block;
+      min-width: 1.8em;
+      padding: 1px 6px;
+      color: #20322c;
+      background: #ffffff;
+      border: 1px solid #9eaca7;
+      border-bottom-width: 2px;
+      border-radius: 3px;
+      font-family: Consolas, monospace;
+      font-size: 0.88em;
+      text-align: center;
+    }
+
+    .success {
+      margin-top: 26px;
+      padding: 20px;
+      background: var(--green-soft);
+      border: 1px solid #acd0c5;
+      border-radius: 4px;
+    }
+
+    .success strong {
+      color: #0d5a46;
+    }
+
+    footer {
+      padding-top: 24px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    a {
+      color: #185da5;
+    }
+
+    @media (max-width: 560px) {
+      main {
+        width: min(100% - 24px, 860px);
+        padding-top: 28px;
+      }
+
+      .step {
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .number {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .path-box {
+        grid-template-columns: 1fr;
+      }
+
+      .copy-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Installer Moyennes pour PRONOTE</h1>
+      <p class="intro">Le dossier téléchargé contient déjà l'extension prête à être sélectionnée. Aucun programme d'installation n'est nécessaire.</p>
+      <div class="notice"><strong>Gardez le dossier extrait.</strong> Edge utilise directement le sous-dossier <strong>extension</strong> : ne le déplacez pas et ne le supprimez pas après l'installation.</div>
+    </header>
+
+    <section class="step">
+      <div class="number">1</div>
+      <div>
+        <h2>Repérez le dossier nommé extension</h2>
+        <p>Dans le dossier que vous venez d'extraire, vous trouvez un sous-dossier nommé <strong>extension</strong>. C'est le seul dossier à sélectionner dans Edge.</p>
+        <div class="picker" aria-label="Exemple du contenu du dossier extrait">
+          <div class="picker-title">Moyennes-pour-PRONOTE</div>
+          <ul class="picker-list">
+            <li class="picker-item is-selected">
+              <svg class="icon-folder" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6l2 2h10v12H3z"/></svg>
+              <span>extension</span>
+              <span class="picker-note">dossier à sélectionner</span>
+            </li>
+            <li class="picker-item">
+              <svg class="icon-file" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v15H6z"/></svg>
+              <span>GUIDE_INSTALLATION.html</span>
+            </li>
+            <li class="picker-item">
+              <svg class="icon-file" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v15H6z"/></svg>
+              <span>GUIDE_INSTALLATION.md</span>
+            </li>
+            <li class="picker-item">
+              <svg class="icon-file" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v15H6z"/></svg>
+              <span>README.md</span>
+            </li>
+          </ul>
+        </div>
+        <p>Si vous ne retrouvez pas ce dossier, voici son emplacement exact sur votre ordinateur :</p>
+        <div class="path-box">
+          <span class="path-value" id="extension-path">Sous-dossier extension</span>
+          <button class="copy-button" id="copy-path" type="button">Copier le chemin</button>
+        </div>
+        <p class="copy-status" id="copy-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="number">2</div>
+      <div>
+        <h2>Ouvrez la page des extensions</h2>
+        <ol>
+          <li>Dans Edge, cliquez sur le bouton <strong>Paramètres et plus</strong> (les trois points, en haut à droite).</li>
+          <li>Choisissez <strong>Extensions</strong>.</li>
+          <li>Cliquez sur <strong>Gérer les extensions</strong>.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="number">3</div>
+      <div>
+        <h2>Activez le mode développeur</h2>
+        <p>En haut à droite de la page <strong>Extensions</strong>, activez l'interrupteur <strong>Mode développeur</strong>.</p>
+        <div class="mock" aria-label="Exemple visuel du mode développeur activé">
+          <div class="mock-row"><span>Mode développeur</span><span class="switch" aria-hidden="true"></span></div>
+        </div>
+        <p>Cliquez ensuite sur <strong>Charger l'extension décompressée</strong>.</p>
+        <div class="mock" aria-label="Exemple visuel du bouton à utiliser">
+          <span class="mock-button">Charger l'extension décompressée</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="number">4</div>
+      <div>
+        <h2>Sélectionnez le dossier extension</h2>
+        <p>Une fenêtre de sélection s'ouvre. Rendez-vous dans le dossier <strong>Moyennes-pour-PRONOTE</strong> que vous avez extrait, puis :</p>
+        <ol>
+          <li>Cliquez une fois sur le dossier <strong>extension</strong> pour le sélectionner.</li>
+          <li>Cliquez sur le bouton <strong>Sélectionner un dossier</strong>.</li>
+        </ol>
+        <div class="picker" aria-label="Exemple de la fenêtre de sélection de dossier">
+          <div class="picker-title">Sélectionner le répertoire d'extension</div>
+          <div class="picker-path">Téléchargements &gt; Moyennes-pour-PRONOTE</div>
+          <ul class="picker-list">
+            <li class="picker-item is-selected">
+              <svg class="icon-folder" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6l2 2h10v12H3z"/></svg>
+              <span>extension</span>
+              <span class="picker-note">cliquez ici</span>
+            </li>
+            <li class="picker-item">
+              <svg class="icon-file" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v15H6z"/></svg>
+              <span>GUIDE_INSTALLATION.html</span>
+            </li>
+            <li class="picker-item">
+              <svg class="icon-file" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v15H6z"/></svg>
+              <span>README.md</span>
+            </li>
+          </ul>
+          <div class="picker-actions">
+            <span>Annuler</span>
+            <span class="is-primary">Sélectionner un dossier</span>
+          </div>
+        </div>
+        <p>N'ouvrez pas le dossier <strong>extension</strong> : il suffit de le sélectionner. Ne choisissez ni le fichier ZIP, ni le dossier <strong>Moyennes-pour-PRONOTE</strong>.</p>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="number">5</div>
+      <div>
+        <h2>Actualisez PRONOTE</h2>
+        <p>Revenez dans PRONOTE, appuyez sur <kbd>F5</kbd>, puis ouvrez <strong>Notes &gt; Les notes</strong>.</p>
+      </div>
+    </section>
+
+    <div class="success">
+      <strong>Installation terminée.</strong> L'encart « Moyennes estimées » apparaît au-dessus des notes. Il se mettra à jour automatiquement.
+    </div>
+
+    <footer>
+      <p>L'extension fonctionne uniquement sur votre ordinateur et n'envoie aucune donnée. Aucun fichier n'est copié ailleurs sur l'ordinateur.</p>
+      <p>Assistance : <a href="mailto:spartis.dev@outlook.com">spartis.dev@outlook.com</a></p>
+      <p><a href="https://learn.microsoft.com/microsoft-edge/extensions/getting-started/extension-sideloading">Procédure officielle Microsoft Edge</a></p>
+    </footer>
+  </main>
+  <script>
+    const pathValue = document.getElementById("extension-path");
+    const copyButton = document.getElementById("copy-path");
+    const copyStatus = document.getElementById("copy-status");
+
+    function extensionFolderPath() {
+      if (location.protocol !== "file:") {
+        return "";
+      }
+
+      const guidePath = decodeURIComponent(location.pathname)
+        .replace(/^\/([A-Za-z]:)/, "$1")
+        .replaceAll("/", "\\");
+      return `${guidePath.slice(0, guidePath.lastIndexOf("\\"))}\\extension`;
+    }
+
+    async function copyText(value) {
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        const textArea = document.createElement("textarea");
+        textArea.value = value;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.append(textArea);
+        textArea.select();
+        const copied = document.execCommand("copy");
+        textArea.remove();
+        if (!copied) {
+          throw new Error("copy failed");
+        }
+      }
+    }
+
+    const extensionPath = extensionFolderPath();
+    if (extensionPath) {
+      pathValue.textContent = extensionPath;
+      copyButton.addEventListener("click", async () => {
+        try {
+          await copyText(extensionPath);
+          copyStatus.textContent = "Chemin copié. Collez-le dans la barre d'adresse de la fenêtre de sélection.";
+        } catch {
+          copyStatus.textContent = "Copie impossible : sélectionnez manuellement le sous-dossier extension.";
+        }
+      });
+    } else {
+      pathValue.textContent = "Sélectionnez le sous-dossier nommé extension";
+      copyButton.hidden = true;
+    }
+  </script>
+</body>
+</html>

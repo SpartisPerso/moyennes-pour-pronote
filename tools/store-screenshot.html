@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Capture boutique - Moyennes pour PRONOTE</title>
+  <link rel="stylesheet" href="../extension/content.css">
+  <style>
+    /* Reproduction simplifiee de l'interface PRONOTE avec des donnees fictives. */
+    html { font-size: 62.5%; }
+
+    body {
+      margin: 0;
+      background: #e8ecef;
+      color: #1d2926;
+      font-family: "Segoe UI", Candara, sans-serif;
+      font-size: 1.3rem;
+    }
+
+    #shot {
+      display: flex;
+      width: 1280px;
+      height: 800px;
+      overflow: hidden;
+      flex-direction: column;
+      background: #f4f6f6;
+    }
+
+    .banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      color: #ffffff;
+      background: #2f3d55;
+    }
+
+    .banner strong { font-size: 1.7rem; }
+    .banner span { font-size: 1.3rem; opacity: 0.85; }
+
+    .subheader {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 14px 28px;
+      background: #ffffff;
+      border-bottom: 1px solid #d5dcda;
+    }
+
+    .subheader h1 { margin: 0; font-size: 1.9rem; }
+
+    .pill {
+      padding: 6px 14px;
+      background: #eef1f0;
+      border: 1px solid #d5dcda;
+      border-radius: 20px;
+      font-size: 1.2rem;
+    }
+
+    .pill.is-active {
+      color: #0d5a46;
+      background: #e0f0ea;
+      border-color: #14765f;
+      font-weight: 700;
+    }
+
+    .content { flex: 1; padding: 22px 28px; }
+
+    .panel-host {
+      width: 620px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid #d5dcda;
+      border-radius: 6px;
+    }
+
+    .liste_contenu_cellule { border-top: 1px solid #edf1f0; }
+    .liste_contenu_cellule:first-of-type { border-top: 0; }
+
+    .liste_contenu_ligne { display: flex; align-items: center; gap: 14px; min-height: 42px; }
+    .zone-gauche { width: 74px; color: #6c7b76; font-size: 1.2rem; }
+    .zone-centrale { flex: 1; min-width: 0; }
+    .zone-contenu-format { display: flex; align-items: center; gap: 14px; }
+    .zone-principale { flex: 1; min-width: 0; }
+    .titre-principal { font-size: 1.3rem; }
+    .ie-titre-gros { font-size: 1.4rem; font-weight: 700; }
+    .zone-complementaire { margin-left: auto; text-align: right; }
+    .note-devoir { font-size: 1.3rem; font-weight: 600; }
+    .note-devoir span { color: #6c7b76; font-size: 1.1rem; }
+
+    [aria-level="1"] .liste_contenu_ligne { min-height: 46px; }
+  </style>
+</head>
+<body>
+  <div id="shot">
+    <div class="banner">
+      <strong>Espace Parents</strong>
+      <span>MARTIN Léa (5E) — Semestre 1</span>
+    </div>
+    <div class="subheader">
+      <h1>Détail des notes</h1>
+      <span class="pill" id="pill-chrono">Par ordre chronologique</span>
+      <span class="pill" id="pill-matiere">Par matière</span>
+    </div>
+    <div class="content">
+      <div class="panel-host">
+        <div role="tree" aria-label="Détail des notes" id="tree"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = [
+      ["ANGLAIS LV1", [["22 sept.", "15,50", null], ["18 sept.", "9,00", "10"]]],
+      ["MATHÉMATIQUES", [["24 sept.", "12,00", null], ["17 sept.", "14,50", null], ["10 sept.", "7,50", "10"]]],
+      ["HISTOIRE-GÉOGRAPHIE", [["23 sept.", "11,00", null], ["15 sept.", "16,00", null]]],
+      ["TECHNOLOGIE", [["12 sept.", "8,00", null]]],
+    ];
+
+    function noteCell(value, scale) {
+      const label = scale ? `${value}/${scale}` : value;
+      const suffix = scale ? `<span>/${scale}</span>` : "";
+      return `<div class="zone-complementaire" aria-label="Note élève : ${label}">
+                <div class="flex-contain"><span class="note-devoir">${value}${suffix}</span></div>
+              </div>`;
+    }
+
+    function row(level, left, principal, complement) {
+      return `<div class="liste_contenu_cellule" role="treeitem" aria-level="${level}">
+                <div class="liste_contenu_cellule_contenu"><div class="liste_contenu_ligne">
+                  <div class="zone-gauche">${left}</div>
+                  <div class="zone-centrale"><div class="zone-contenu-format">
+                    <div class="zone-principale">${principal}</div>
+                    ${complement}
+                  </div></div>
+                </div></div>
+              </div>`;
+    }
+
+    function render(view) {
+      const tree = document.getElementById("tree");
+      const parts = [];
+      if (view === "matiere") {
+        for (const [subject, notes] of DATA) {
+          parts.push(row(1, "", `<div class="titre-principal"><span class="ie-titre-gros">${subject}</span></div>`, ""));
+          for (const [date, value, scale] of notes) {
+            parts.push(row(2, `<time class="date-contain">${date}</time>`, "", noteCell(value, scale)));
+          }
+        }
+      } else {
+        const flat = [];
+        for (const [subject, notes] of DATA) {
+          for (const note of notes) flat.push([subject, ...note]);
+        }
+        flat.sort((a, b) => Number(b[1].split(" ")[0]) - Number(a[1].split(" ")[0]));
+        for (const [subject, date, value, scale] of flat) {
+          parts.push(row(2, `<time class="date-contain">${date}</time>`, `<div class="titre-principal"><div class="ie_ellipsis">${subject}</div></div>`, noteCell(value, scale)));
+        }
+      }
+      tree.innerHTML = parts.join("");
+      document.getElementById("pill-chrono").classList.toggle("is-active", view !== "matiere");
+      document.getElementById("pill-matiere").classList.toggle("is-active", view === "matiere");
+    }
+
+    render(new URLSearchParams(location.search).get("view") === "matiere" ? "matiere" : "chrono");
+  </script>
+  <script src="../extension/content.js"></script>
+</body>
+</html>
