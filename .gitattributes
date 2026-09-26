@@ -1,0 +1,5 @@
+# Le code de l'extension doit primer dans les statistiques du depot.
+docs/** linguist-documentation
+store/** linguist-documentation
+tools/store-screenshot.html linguist-vendored
+GUIDE_INSTALLATION.html linguist-documentation

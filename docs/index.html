@@ -66,6 +66,56 @@
       border-radius: 4px;
     }
 
+    .stores {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 18px 0 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .store {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    a.store:hover {
+      border-color: var(--green);
+      box-shadow: 0 2px 8px rgb(20 118 95 / 14%);
+    }
+
+    .store span {
+      display: block;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .store small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+
+    .store .dot {
+      width: 12px;
+      height: 12px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+    }
+
+    .store.is-pending {
+      background: #f1f4f3;
+    }
+
     a { color: #14607f; }
 
     footer {
@@ -112,7 +162,27 @@
     <p><a href="confidentialite.html">Lire la politique de confidentialité</a></p>
 
     <h2>Installation</h2>
-    <p>Les versions et le guide d'installation pas à pas sont disponibles sur le <a href="https://github.com/SpartisPerso/moyennes-pour-pronote">dépôt du projet</a>.</p>
+    <ul class="stores">
+      <li>
+        <a class="store" href="https://microsoftedge.microsoft.com/addons/detail/moyennes-pour-pronote/ojbadlllbkeffagbklaklijmbplaiaaa">
+          <span class="dot" style="background:#0C59A4"></span>
+          <span>Microsoft Edge<small>Disponible — installer</small></span>
+        </a>
+      </li>
+      <li>
+        <a class="store is-pending" href="https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/">
+          <span class="dot" style="background:#FF7139"></span>
+          <span>Mozilla Firefox<small>En cours de révision</small></span>
+        </a>
+      </li>
+      <li>
+        <span class="store is-pending">
+          <span class="dot" style="background:#4285F4"></span>
+          <span>Google Chrome<small>En cours de révision</small></span>
+        </span>
+      </li>
+    </ul>
+    <p>En attendant la publication sur Chrome et Firefox, l'installation manuelle et le guide pas à pas sont disponibles sur le <a href="https://github.com/SpartisPerso/moyennes-pour-pronote">dépôt du projet</a>.</p>
 
     <h2>Assistance</h2>
     <p><a href="mailto:spartis.dev@outlook.com">spartis.dev@outlook.com</a></p>
