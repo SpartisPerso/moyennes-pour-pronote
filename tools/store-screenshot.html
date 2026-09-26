@@ -5,15 +5,17 @@
   <title>Capture boutique - Moyennes pour PRONOTE</title>
   <link rel="stylesheet" href="../extension/content.css">
   <style>
-    /* Reproduction simplifiee de l'interface PRONOTE avec des donnees fictives. */
+    /* Reproduction fidele de l'interface PRONOTE, avec des donnees fictives. */
     html { font-size: 62.5%; }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: #e8ecef;
-      color: #1d2926;
-      font-family: "Segoe UI", Candara, sans-serif;
-      font-size: 1.3rem;
+      color: #1f2a2d;
+      background: #ffffff;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 1.4rem;
     }
 
     #shot {
@@ -22,99 +24,268 @@
       height: 800px;
       overflow: hidden;
       flex-direction: column;
-      background: #f4f6f6;
+      background: #ffffff;
     }
 
-    .banner {
+    .topstrip {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 28px;
-      color: #ffffff;
-      background: #2f3d55;
+      height: 40px;
+      padding: 0 14px;
+      background: #ffffff;
     }
 
-    .banner strong { font-size: 1.7rem; }
-    .banner span { font-size: 1.3rem; opacity: 0.85; }
+    .crest {
+      width: 52px;
+      height: 30px;
+      background: linear-gradient(90deg, #d7dde0 0 33%, #eceff1 33% 66%, #d7dde0 66%);
+      border-radius: 2px;
+    }
 
-    .subheader {
+    .cardicon {
+      width: 26px;
+      height: 20px;
+      background: #2f6fb0;
+      border-radius: 3px;
+    }
+
+    .mainbar {
+      display: flex;
+      align-items: stretch;
+      height: 56px;
+      color: #ffffff;
+      background: #0f5b5d;
+    }
+
+    .student {
       display: flex;
       align-items: center;
-      gap: 24px;
-      padding: 14px 28px;
-      background: #ffffff;
-      border-bottom: 1px solid #d5dcda;
-    }
-
-    .subheader h1 { margin: 0; font-size: 1.9rem; }
-
-    .pill {
-      padding: 6px 14px;
-      background: #eef1f0;
-      border: 1px solid #d5dcda;
-      border-radius: 20px;
-      font-size: 1.2rem;
-    }
-
-    .pill.is-active {
-      color: #0d5a46;
-      background: #e0f0ea;
-      border-color: #14765f;
+      gap: 12px;
+      padding: 0 18px 0 12px;
+      background: #0d5254;
+      font-size: 1.5rem;
       font-weight: 700;
+      white-space: nowrap;
     }
 
-    .content { flex: 1; padding: 22px 28px; }
+    .avatar {
+      width: 34px;
+      height: 34px;
+      background: radial-gradient(circle at 50% 35%, #c9a88a 0 38%, #55707a 38%);
+      border-radius: 50%;
+    }
 
-    .panel-host {
-      width: 620px;
-      padding: 16px;
+    .tabs {
+      display: flex;
+      align-items: stretch;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tabs li {
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      font-size: 1.45rem;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .tabs li.home { padding: 0 20px; font-size: 1.9rem; }
+
+    .tabs li.is-active {
+      color: #123c3e;
       background: #ffffff;
-      border: 1px solid #d5dcda;
-      border-radius: 6px;
+      border-bottom: 3px solid #0aa89a;
+      font-weight: 600;
     }
 
-    .liste_contenu_cellule { border-top: 1px solid #edf1f0; }
-    .liste_contenu_cellule:first-of-type { border-top: 0; }
+    .tabs .two-lines { display: block; }
 
-    .liste_contenu_ligne { display: flex; align-items: center; gap: 14px; min-height: 42px; }
-    .zone-gauche { width: 74px; color: #6c7b76; font-size: 1.2rem; }
+    .pagetitle {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      padding: 0 14px;
+      color: #2b3a3d;
+      background: #e6eaec;
+      font-size: 1.45rem;
+      font-weight: 600;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 46px;
+      padding: 0 14px;
+      background: #f2f5f6;
+    }
+
+    .period {
+      width: 200px;
+      padding: 7px 10px;
+      background: #ffffff;
+      border: 1px solid #b9c4c7;
+      border-radius: 3px;
+      font-size: 1.35rem;
+    }
+
+    .toggle {
+      padding: 8px 14px;
+      color: #0c6b62;
+      background: #ffffff;
+      border: 1px solid #0c6b62;
+      border-radius: 3px;
+      font-size: 1.35rem;
+    }
+
+    .toggle.is-active {
+      color: #ffffff;
+      background: #0c6b62;
+      font-weight: 600;
+    }
+
+    .workspace {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .column {
+      width: 640px;
+      padding: 14px 16px 0;
+      border-right: 1px solid #dfe4e6;
+    }
+
+    .searchrow {
+      display: flex;
+      justify-content: flex-end;
+      padding-bottom: 8px;
+    }
+
+    .search {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      background: #e4f1ef;
+      border-radius: 50%;
+      color: #0c6b62;
+      font-size: 1.7rem;
+    }
+
+    .liste_contenu_cellule { border-bottom: 1px solid #e7ebec; }
+
+    .liste_contenu_ligne {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 52px;
+    }
+
+    .zone-gauche { width: 54px; flex: 0 0 auto; }
+
+    .date-contain {
+      display: grid;
+      width: 44px;
+      padding: 4px 0;
+      background: #ffffff;
+      border: 1px solid #d9dfe1;
+      border-radius: 4px;
+      color: #4d5d61;
+      font-size: 1.15rem;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    .date-contain b { display: block; font-size: 1.3rem; font-weight: 600; }
+
     .zone-centrale { flex: 1; min-width: 0; }
     .zone-contenu-format { display: flex; align-items: center; gap: 14px; }
     .zone-principale { flex: 1; min-width: 0; }
-    .titre-principal { font-size: 1.3rem; }
-    .ie-titre-gros { font-size: 1.4rem; font-weight: 700; }
-    .zone-complementaire { margin-left: auto; text-align: right; }
-    .note-devoir { font-size: 1.3rem; font-weight: 600; }
-    .note-devoir span { color: #6c7b76; font-size: 1.1rem; }
+    .titre-principal { font-size: 1.45rem; }
 
-    [aria-level="1"] .liste_contenu_ligne { min-height: 46px; }
+    .ie-titre-gros {
+      color: #0c6b62;
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .zone-gauche .ie-line-color {
+      display: block;
+      width: 4px;
+      height: 26px;
+      margin-left: 18px;
+      background: #0c6b62;
+      border-radius: 2px;
+    }
+
+    .zone-complementaire { margin-left: auto; text-align: right; }
+
+    .note-devoir {
+      color: #1f2a2d;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    [aria-level="1"] .liste_contenu_ligne { min-height: 52px; }
+    [aria-level="1"] { border-bottom: 1px solid #e7ebec; }
   </style>
 </head>
 <body>
   <div id="shot">
-    <div class="banner">
-      <strong>Espace Parents</strong>
-      <span>MARTIN Léa (5E) — Semestre 1</span>
+    <div class="topstrip">
+      <div class="crest" aria-hidden="true"></div>
+      <div class="cardicon" aria-hidden="true"></div>
     </div>
-    <div class="subheader">
-      <h1>Détail des notes</h1>
-      <span class="pill" id="pill-chrono">Par ordre chronologique</span>
-      <span class="pill" id="pill-matiere">Par matière</span>
+
+    <div class="mainbar">
+      <div class="student">
+        <span class="avatar" aria-hidden="true"></span>
+        MARTIN Léa (5E CHEV)
+      </div>
+      <ul class="tabs">
+        <li class="home">⌂</li>
+        <li><span class="two-lines">Informations</span><span class="two-lines">&nbsp;personnelles</span></li>
+        <li><span class="two-lines">Cahier</span><span class="two-lines">&nbsp;de textes</span></li>
+        <li class="is-active">Notes</li>
+        <li>Compétences</li>
+        <li><span class="two-lines">Vie</span><span class="two-lines">&nbsp;scolaire</span></li>
+        <li>Communication</li>
+      </ul>
     </div>
-    <div class="content">
-      <div class="panel-host">
-        <div role="tree" aria-label="Détail des notes" id="tree"></div>
+
+    <div class="pagetitle">Détail des notes</div>
+
+    <div class="toolbar">
+      <span class="period">Semestre 1</span>
+      <span class="toggle" id="pill-chrono">Par ordre chronologique</span>
+      <span class="toggle" id="pill-matiere">Par matière</span>
+    </div>
+
+    <div class="workspace">
+      <div class="column">
+        <div class="searchrow"><span class="search" aria-hidden="true">⌕</span></div>
+        <div class="listhost">
+          <div role="tree" aria-label="Détail des notes" id="tree"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
     const DATA = [
-      ["ANGLAIS LV1", [["22 sept.", "15,50", null], ["18 sept.", "9,00", "10"]]],
-      ["MATHÉMATIQUES", [["24 sept.", "12,00", null], ["17 sept.", "14,50", null], ["10 sept.", "7,50", "10"]]],
-      ["HISTOIRE-GÉOGRAPHIE", [["23 sept.", "11,00", null], ["15 sept.", "16,00", null]]],
-      ["TECHNOLOGIE", [["12 sept.", "8,00", null]]],
+      ["ANGLAIS LV1", [["22", "sept.", "15,50", null], ["18", "sept.", "9,00", "10"]]],
+      ["MATHÉMATIQUES", [["24", "sept.", "12,00", null], ["17", "sept.", "14,50", null], ["10", "sept.", "7,50", "10"]]],
+      ["TECHNOLOGIE", [["12", "sept.", "8,00", null]]],
     ];
+
+    function dateChip(day, month) {
+      return `<time class="date-contain"><b>${day}</b>${month}</time>`;
+    }
 
     function noteCell(value, scale) {
       const label = scale ? `${value}/${scale}` : value;
@@ -141,9 +312,9 @@
       const parts = [];
       if (view === "matiere") {
         for (const [subject, notes] of DATA) {
-          parts.push(row(1, "", `<div class="titre-principal"><span class="ie-titre-gros">${subject}</span></div>`, ""));
-          for (const [date, value, scale] of notes) {
-            parts.push(row(2, `<time class="date-contain">${date}</time>`, "", noteCell(value, scale)));
+          parts.push(row(1, '<span class="ie-line-color"></span>', `<div class="titre-principal"><span class="ie-titre-gros">${subject}</span></div>`, ""));
+          for (const [day, month, value, scale] of notes) {
+            parts.push(row(2, dateChip(day, month), "", noteCell(value, scale)));
           }
         }
       } else {
@@ -151,9 +322,9 @@
         for (const [subject, notes] of DATA) {
           for (const note of notes) flat.push([subject, ...note]);
         }
-        flat.sort((a, b) => Number(b[1].split(" ")[0]) - Number(a[1].split(" ")[0]));
-        for (const [subject, date, value, scale] of flat) {
-          parts.push(row(2, `<time class="date-contain">${date}</time>`, `<div class="titre-principal"><div class="ie_ellipsis">${subject}</div></div>`, noteCell(value, scale)));
+        flat.sort((a, b) => Number(b[1]) - Number(a[1]));
+        for (const [subject, day, month, value, scale] of flat) {
+          parts.push(row(2, dateChip(day, month), `<div class="titre-principal"><div class="ie_ellipsis">${subject}</div></div>`, noteCell(value, scale)));
         }
       }
       tree.innerHTML = parts.join("");
