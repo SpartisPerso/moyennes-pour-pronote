@@ -1,339 +1,681 @@
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Capture boutique - Moyennes pour PRONOTE</title>
-  <link rel="stylesheet" href="../extension/content.css">
-  <style>
-    /* Reproduction fidele de l'interface PRONOTE, avec des donnees fictives. */
-    html { font-size: 62.5%; }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      color: #1f2a2d;
-      background: #ffffff;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: 1.4rem;
-    }
-
-    #shot {
-      display: flex;
-      width: 1280px;
-      height: 800px;
-      overflow: hidden;
-      flex-direction: column;
-      background: #ffffff;
-    }
-
-    .topstrip {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 40px;
-      padding: 0 14px;
-      background: #ffffff;
-    }
-
-    .crest {
-      width: 52px;
-      height: 30px;
-      background: linear-gradient(90deg, #d7dde0 0 33%, #eceff1 33% 66%, #d7dde0 66%);
-      border-radius: 2px;
-    }
-
-    .cardicon {
-      width: 26px;
-      height: 20px;
-      background: #2f6fb0;
-      border-radius: 3px;
-    }
-
-    .mainbar {
-      display: flex;
-      align-items: stretch;
-      height: 56px;
-      color: #ffffff;
-      background: #0f5b5d;
-    }
-
-    .student {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 18px 0 12px;
-      background: #0d5254;
-      font-size: 1.5rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .avatar {
-      width: 34px;
-      height: 34px;
-      background: radial-gradient(circle at 50% 35%, #c9a88a 0 38%, #55707a 38%);
-      border-radius: 50%;
-    }
-
-    .tabs {
-      display: flex;
-      align-items: stretch;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .tabs li {
-      display: flex;
-      align-items: center;
-      padding: 0 18px;
-      font-size: 1.45rem;
-      line-height: 1.15;
-      text-align: center;
-    }
-
-    .tabs li.home { padding: 0 20px; font-size: 1.9rem; }
-
-    .tabs li.is-active {
-      color: #123c3e;
-      background: #ffffff;
-      border-bottom: 3px solid #0aa89a;
-      font-weight: 600;
-    }
-
-    .tabs .two-lines { display: block; }
-
-    .pagetitle {
-      display: flex;
-      align-items: center;
-      height: 32px;
-      padding: 0 14px;
-      color: #2b3a3d;
-      background: #e6eaec;
-      font-size: 1.45rem;
-      font-weight: 600;
-    }
-
-    .toolbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      height: 46px;
-      padding: 0 14px;
-      background: #f2f5f6;
-    }
-
-    .period {
-      width: 200px;
-      padding: 7px 10px;
-      background: #ffffff;
-      border: 1px solid #b9c4c7;
-      border-radius: 3px;
-      font-size: 1.35rem;
-    }
-
-    .toggle {
-      padding: 8px 14px;
-      color: #0c6b62;
-      background: #ffffff;
-      border: 1px solid #0c6b62;
-      border-radius: 3px;
-      font-size: 1.35rem;
-    }
-
-    .toggle.is-active {
-      color: #ffffff;
-      background: #0c6b62;
-      font-weight: 600;
-    }
-
-    .workspace {
-      display: flex;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .column {
-      width: 640px;
-      padding: 14px 16px 0;
-      border-right: 1px solid #dfe4e6;
-    }
-
-    .searchrow {
-      display: flex;
-      justify-content: flex-end;
-      padding-bottom: 8px;
-    }
-
-    .search {
-      display: grid;
-      width: 34px;
-      height: 34px;
-      place-items: center;
-      background: #e4f1ef;
-      border-radius: 50%;
-      color: #0c6b62;
-      font-size: 1.7rem;
-    }
-
-    .liste_contenu_cellule { border-bottom: 1px solid #e7ebec; }
-
-    .liste_contenu_ligne {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-height: 52px;
-    }
-
-    .zone-gauche { width: 54px; flex: 0 0 auto; }
-
-    .date-contain {
-      display: grid;
-      width: 44px;
-      padding: 4px 0;
-      background: #ffffff;
-      border: 1px solid #d9dfe1;
-      border-radius: 4px;
-      color: #4d5d61;
-      font-size: 1.15rem;
-      line-height: 1.15;
-      text-align: center;
-    }
-
-    .date-contain b { display: block; font-size: 1.3rem; font-weight: 600; }
-
-    .zone-centrale { flex: 1; min-width: 0; }
-    .zone-contenu-format { display: flex; align-items: center; gap: 14px; }
-    .zone-principale { flex: 1; min-width: 0; }
-    .titre-principal { font-size: 1.45rem; }
-
-    .ie-titre-gros {
-      color: #0c6b62;
-      font-size: 1.75rem;
-      font-weight: 700;
-    }
-
-    .zone-gauche .ie-line-color {
-      display: block;
-      width: 4px;
-      height: 26px;
-      margin-left: 18px;
-      background: #0c6b62;
-      border-radius: 2px;
-    }
-
-    .zone-complementaire { margin-left: auto; text-align: right; }
-
-    .note-devoir {
-      color: #1f2a2d;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    [aria-level="1"] .liste_contenu_ligne { min-height: 52px; }
-    [aria-level="1"] { border-bottom: 1px solid #e7ebec; }
-  </style>
-</head>
-<body>
-  <div id="shot">
-    <div class="topstrip">
-      <div class="crest" aria-hidden="true"></div>
-      <div class="cardicon" aria-hidden="true"></div>
-    </div>
-
-    <div class="mainbar">
-      <div class="student">
-        <span class="avatar" aria-hidden="true"></span>
-        MARTIN Léa (5E CHEV)
-      </div>
-      <ul class="tabs">
-        <li class="home">⌂</li>
-        <li><span class="two-lines">Informations</span><span class="two-lines">&nbsp;personnelles</span></li>
-        <li><span class="two-lines">Cahier</span><span class="two-lines">&nbsp;de textes</span></li>
-        <li class="is-active">Notes</li>
-        <li>Compétences</li>
-        <li><span class="two-lines">Vie</span><span class="two-lines">&nbsp;scolaire</span></li>
-        <li>Communication</li>
-      </ul>
-    </div>
-
-    <div class="pagetitle">Détail des notes</div>
-
-    <div class="toolbar">
-      <span class="period">Semestre 1</span>
-      <span class="toggle" id="pill-chrono">Par ordre chronologique</span>
-      <span class="toggle" id="pill-matiere">Par matière</span>
-    </div>
-
-    <div class="workspace">
-      <div class="column">
-        <div class="searchrow"><span class="search" aria-hidden="true">⌕</span></div>
-        <div class="listhost">
-          <div role="tree" aria-label="Détail des notes" id="tree"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const DATA = [
-      ["ANGLAIS LV1", [["22", "sept.", "15,50", null], ["18", "sept.", "9,00", "10"]]],
-      ["MATHÉMATIQUES", [["24", "sept.", "12,00", null], ["17", "sept.", "14,50", null], ["10", "sept.", "7,50", "10"]]],
-      ["TECHNOLOGIE", [["12", "sept.", "8,00", null]]],
-    ];
-
-    function dateChip(day, month) {
-      return `<time class="date-contain"><b>${day}</b>${month}</time>`;
-    }
-
-    function noteCell(value, scale) {
-      const label = scale ? `${value}/${scale}` : value;
-      const suffix = scale ? `<span>/${scale}</span>` : "";
-      return `<div class="zone-complementaire" aria-label="Note élève : ${label}">
-                <div class="flex-contain"><span class="note-devoir">${value}${suffix}</span></div>
-              </div>`;
-    }
-
-    function row(level, left, principal, complement) {
-      return `<div class="liste_contenu_cellule" role="treeitem" aria-level="${level}">
-                <div class="liste_contenu_cellule_contenu"><div class="liste_contenu_ligne">
-                  <div class="zone-gauche">${left}</div>
-                  <div class="zone-centrale"><div class="zone-contenu-format">
-                    <div class="zone-principale">${principal}</div>
-                    ${complement}
-                  </div></div>
-                </div></div>
-              </div>`;
-    }
-
-    function render(view) {
-      const tree = document.getElementById("tree");
-      const parts = [];
-      if (view === "matiere") {
-        for (const [subject, notes] of DATA) {
-          parts.push(row(1, '<span class="ie-line-color"></span>', `<div class="titre-principal"><span class="ie-titre-gros">${subject}</span></div>`, ""));
-          for (const [day, month, value, scale] of notes) {
-            parts.push(row(2, dateChip(day, month), "", noteCell(value, scale)));
-          }
-        }
-      } else {
-        const flat = [];
-        for (const [subject, notes] of DATA) {
-          for (const note of notes) flat.push([subject, ...note]);
-        }
-        flat.sort((a, b) => Number(b[1]) - Number(a[1]));
-        for (const [subject, day, month, value, scale] of flat) {
-          parts.push(row(2, dateChip(day, month), `<div class="titre-principal"><div class="ie_ellipsis">${subject}</div></div>`, noteCell(value, scale)));
-        }
+  <head>
+    <meta charset="utf-8" />
+    <title>Capture boutique - Moyennes pour PRONOTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../extension/content.css" />
+    <style>
+      /* Reconstitution de l'interface PRONOTE (mesures relevees sur une page reelle). */
+      * {
+        box-sizing: border-box;
       }
-      tree.innerHTML = parts.join("");
-      document.getElementById("pill-chrono").classList.toggle("is-active", view !== "matiere");
-      document.getElementById("pill-matiere").classList.toggle("is-active", view === "matiere");
-    }
 
-    render(new URLSearchParams(location.search).get("view") === "matiere" ? "matiere" : "chrono");
-  </script>
-  <script src="../extension/content.js"></script>
-</body>
+      body {
+        margin: 0;
+        background: #52585c;
+        font: 400 11px/1.2 Montserrat, Arial, Verdana, Geneva, Helvetica, sans-serif;
+        color: #000;
+      }
+
+      #shot {
+        width: 1280px;
+        height: 800px;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ---------- Bandeau etablissement ---------- */
+      .ObjetBandeauEspace {
+        height: 47px;
+        flex: 0 0 47px;
+        background: rgba(255, 255, 255, 0.97);
+        color: #4b4b4b;
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        position: relative;
+      }
+
+      .crest {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .crest-flag {
+        width: 21px;
+        height: 14px;
+        display: flex;
+        border: 1px solid #d6d6d6;
+      }
+
+      .crest-flag i {
+        flex: 1;
+      }
+
+      .crest-flag i:nth-child(1) {
+        background: #23408f;
+      }
+      .crest-flag i:nth-child(2) {
+        background: #fff;
+      }
+      .crest-flag i:nth-child(3) {
+        background: #cf2434;
+      }
+
+      .crest-text {
+        font-size: 7px;
+        font-weight: 700;
+        line-height: 1.15;
+        color: #3a3a3a;
+        letter-spacing: 0.2px;
+      }
+
+      .ibe_centre {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .ibe_centre .etab {
+        font-size: 16px;
+        font-weight: 600;
+        color: #4b4b4b;
+      }
+
+      .ibe_centre .espace {
+        font-size: 15px;
+        font-weight: 400;
+        color: #4b4b4b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .ibe_centre .espace svg {
+        opacity: 0.75;
+      }
+
+      .ibe_droite {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: #00584c;
+      }
+
+      /* ---------- Menu principal ---------- */
+      .objetBandeauEntete_menu {
+        height: 45px;
+        flex: 0 0 45px;
+        background: #4b4b4b;
+        display: flex;
+        align-items: stretch;
+        color: #f6f6f6;
+      }
+
+      .objetBandeauEntete_membres {
+        width: 197px;
+        background: #353535;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+      }
+
+      .avatar {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        flex: 0 0 26px;
+        background: radial-gradient(circle at 50% 32%, #f0d3bd 0 34%, #3f6fa8 35% 100%);
+        border: 1px solid #5d5d5d;
+      }
+
+      .onglets-wrapper {
+        display: flex;
+        align-items: stretch;
+      }
+
+      .item-menu_niveau0 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 11px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.2;
+        color: #f6f6f6;
+        white-space: pre-line;
+      }
+
+      .item-menu_niveau0.actif {
+        background: #fff;
+        color: #4b4b4b;
+        font-weight: 600;
+        box-shadow: inset 0 3px 0 #00a58a;
+      }
+
+      .menu-commandes {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 0 14px;
+      }
+
+      .menu-commandes .sep {
+        width: 1px;
+        height: 22px;
+        background: #6d6d6d;
+      }
+
+      .badge-wrap {
+        position: relative;
+        display: flex;
+      }
+
+      .badge {
+        position: absolute;
+        top: -6px;
+        right: -7px;
+        min-width: 14px;
+        height: 14px;
+        border-radius: 7px;
+        background: #d7263d;
+        color: #fff;
+        font-size: 9px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 3px;
+      }
+
+      /* ---------- Bandeau titre ---------- */
+      .objetBandeauEntete_secondmenu {
+        height: 30px;
+        flex: 0 0 30px;
+        background: #d9dbdc;
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+      }
+
+      .objetBandeauEntete_secondmenu h1 {
+        margin: 0;
+        font-size: 11px;
+        font-weight: 400;
+        color: #000;
+      }
+
+      .objetBandeauEntete_secondmenu .commandes {
+        margin-left: auto;
+        display: flex;
+        gap: 10px;
+        opacity: 0.45;
+      }
+
+      /* ---------- Bandeau filtres ---------- */
+      .objetBandeauEntete_thirdmenu {
+        height: 34px;
+        flex: 0 0 34px;
+        background: #ededed;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 4px;
+      }
+
+      .ObjetSaisie {
+        width: 149px;
+        height: 24px;
+        background: #fff;
+        border: 1px solid #b6b6b6;
+        border-radius: 3.5px;
+        display: flex;
+        align-items: center;
+        padding: 0 6px 0 8px;
+        font-size: 11px;
+        color: #000;
+      }
+
+      .ObjetSaisie .caret {
+        margin-left: auto;
+        border-left: 1px solid #d5d5d5;
+        padding-left: 6px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .iecb {
+        height: 24px;
+        border: 1px solid #008673;
+        border-radius: 3.5px;
+        color: #00584c;
+        font-size: 11px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        padding: 5px 8px;
+      }
+
+      .iecb.is-checked {
+        background: #00584c;
+        border-color: #00584c;
+        color: #fff;
+      }
+
+      /* ---------- Zone principale ---------- */
+      .interface_affV_client {
+        flex: 1 1 auto;
+        display: flex;
+        min-height: 0;
+      }
+
+      .liste-contain {
+        width: 640px;
+        flex: 0 0 640px;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        box-shadow: 6px 0.5px 6px -6px rgba(0, 0, 0, 0.16);
+        border-right: 1px solid #ececec;
+      }
+
+      .liste_btnentete {
+        height: 56px;
+        flex: 0 0 56px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 12px 16px;
+      }
+
+      .btn-recherche {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #dbeeea;
+        color: #00584c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .liste_zone {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .liste_content_lignes {
+        margin: 0 3px;
+      }
+
+      .liste_contenu_cellule {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        margin: 0 4px;
+      }
+
+      .liste_contenu_cellule::after {
+        content: "";
+        position: absolute;
+        left: 32px;
+        right: 16px;
+        bottom: 0;
+        height: 1px;
+        background: #ededed;
+      }
+
+      .liste_contenu_cellule_contenu {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 37px;
+      }
+
+      .liste_contenu_ligne {
+        display: flex;
+        padding: 15px 0;
+      }
+
+      .zone-gauche {
+        display: flex;
+        align-items: center;
+        padding: 0 8px 0 16px;
+      }
+
+      .ie-line-color {
+        width: 8px;
+        min-height: 22px;
+        display: block;
+        border-left: 3px solid #a4d4c6;
+      }
+
+      .zone-centrale {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .zone-contenu-format {
+        display: flex;
+        padding: 0 16px 0 0;
+      }
+
+      .zone-principale {
+        flex: 1 1 auto;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 0 16px 0 0;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .ie-titre-gros {
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.34;
+        color: #00584c;
+      }
+
+      .titre-principal {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.2;
+        color: #1c3f3a;
+      }
+
+      .date-contain {
+        width: 32px;
+        height: 32px;
+        padding: 0 8px;
+        border: 1px solid #e2e2e2;
+        border-radius: 3.5px;
+        background: rgba(248, 248, 248, 0.5);
+        color: #4b4b4b;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 11px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .zone-complementaire {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+      }
+
+      .flex-contain {
+        display: flex;
+      }
+
+      .flex-center {
+        align-items: center;
+      }
+
+      .flex-gap {
+        gap: 4px;
+      }
+
+      .note-devoir {
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .Zone-DetailsNotes {
+        flex: 1 1 auto;
+        padding-top: 16px;
+        text-align: center;
+        color: #7a7a7a;
+        font-size: 11px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="shot">
+      <header class="ObjetBandeauEspace">
+        <div class="crest">
+          <span class="crest-flag"><i></i><i></i><i></i></span>
+          <span class="crest-text">ACADÉMIE<br />DE VERSAILLES</span>
+        </div>
+        <div class="ibe_centre">
+          <div class="etab">COLLÈGE VICTOR HUGO</div>
+          <div class="espace">
+            <span>Espace Parents - M. MARTIN Richard</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8-2h3v3h-3v-3zm5 0h3v3h-3v-3zm-5 5h3v3h-3v-3zm5 0h3v3h-3v-3z" />
+            </svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 3v9" />
+              <path d="M6.5 6.5a8 8 0 1 0 11 0" />
+            </svg>
+          </div>
+        </div>
+        <div class="ibe_droite">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" fill="#00a58a" />
+            <circle cx="9" cy="10" r="3" fill="#c8e64b" />
+            <circle cx="15" cy="14" r="3" fill="#fff" />
+          </svg>
+          <span>PRONOTE</span>
+        </div>
+      </header>
+
+      <nav class="objetBandeauEntete_menu">
+        <div class="objetBandeauEntete_membres">
+          <span class="avatar"></span>
+          <span>MARTIN Léa (4e Verte)</span>
+        </div>
+        <div class="onglets-wrapper">
+          <div class="item-menu_niveau0" title="Accueil">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 3 2 11h3v10h5v-6h4v6h5V11h3L12 3z" />
+            </svg>
+          </div>
+          <div class="item-menu_niveau0">Informations
+personnelles</div>
+          <div class="item-menu_niveau0">Cahier
+de textes</div>
+          <div class="item-menu_niveau0 actif">Notes</div>
+          <div class="item-menu_niveau0">Compétences</div>
+          <div class="item-menu_niveau0">Vie
+scolaire</div>
+          <div class="item-menu_niveau0">Communication</div>
+        </div>
+        <div class="menu-commandes">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M2 21l20-9L2 3v7l13 2-13 2v7z" />
+          </svg>
+          <span class="sep"></span>
+          <span class="badge-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M4 18h16l-2-3v-4a6 6 0 1 0-12 0v4l-2 3zm8 3a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 21z" />
+            </svg>
+            <span class="badge">5</span>
+          </span>
+          <span class="badge-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm.9 15h-1.8v-1.8h1.8V17zm1.4-5.1-.8.8c-.5.5-.7.9-.7 1.8h-1.7v-.4c0-.9.3-1.6.9-2.2l1.1-1.1c.3-.3.5-.7.5-1.2a1.8 1.8 0 0 0-3.6 0H8.6a3.4 3.4 0 1 1 6.8 0c0 .7-.3 1.4-.8 1.9z" />
+            </svg>
+            <span class="badge">4</span>
+          </span>
+        </div>
+      </nav>
+
+      <nav class="objetBandeauEntete_secondmenu">
+        <h1>Détail des notes</h1>
+        <div class="commandes">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M5 3h11l3 3v15H5V3zm3 2v5h8V5H8zm-1 9h10v5H7v-5z" />
+          </svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M7 3h10v4H7V3zm-3 5h16v7h-3v6H7v-6H4V8zm5 7v4h6v-4H9z" />
+          </svg>
+        </div>
+      </nav>
+
+      <nav class="objetBandeauEntete_thirdmenu">
+        <div class="ObjetSaisie">
+          <span>Semestre 1</span>
+          <span class="caret">
+            <svg width="9" height="9" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+              <path d="M1 3.5 6 9l5-5.5H1z" />
+            </svg>
+          </span>
+        </div>
+        <span class="iecb" data-chip="chrono">Par ordre chronologique</span>
+        <span class="iecb" data-chip="matiere">Par matière</span>
+      </nav>
+
+      <main class="interface_affV_client">
+        <section class="liste-contain">
+          <div class="liste_btnentete">
+            <span class="btn-recherche">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                <circle cx="10.5" cy="10.5" r="6.5" />
+                <path d="M15.5 15.5 21 21" />
+              </svg>
+            </span>
+          </div>
+          <div class="liste_zone">
+            <div class="liste_content_lignes" role="tree" id="tree"></div>
+          </div>
+        </section>
+        <section class="Zone-DetailsNotes"></section>
+      </main>
+    </div>
+
+    <script>
+      const SUBJECTS = [
+        {
+          name: "ANGLAIS LV1",
+          notes: [
+            { day: "22", month: "sept.", text: "15,50" },
+            { day: "18", month: "sept.", text: "9,00/10" },
+          ],
+        },
+        {
+          name: "HISTOIRE-GÉOGRAPHIE",
+          notes: [
+            { day: "23", month: "sept.", text: "11,00" },
+            { day: "15", month: "sept.", text: "16,00" },
+          ],
+        },
+        {
+          name: "MATHÉMATIQUES",
+          notes: [
+            { day: "24", month: "sept.", text: "12,00" },
+            { day: "17", month: "sept.", text: "14,50" },
+            { day: "10", month: "sept.", text: "7,50/10" },
+          ],
+        },
+        {
+          name: "TECHNOLOGIE",
+          notes: [{ day: "12", month: "sept.", text: "8,00" }],
+        },
+      ];
+
+      const view =
+        new URLSearchParams(location.search).get("view") === "chrono"
+          ? "chrono"
+          : "matiere";
+
+      document
+        .querySelector('.iecb[data-chip="' + view + '"]')
+        .classList.add("is-checked");
+
+      function subjectRow(name) {
+        return `
+          <div role="treeitem" aria-level="1" aria-expanded="true" class="liste_contenu_cellule">
+            <div class="liste_contenu_cellule_contenu">
+              <div class="liste_contenu_ligne">
+                <div class="zone-gauche"><span class="ie-line-color"></span></div>
+                <div class="zone-centrale">
+                  <div class="zone-contenu-format">
+                    <div class="zone-principale">
+                      <div class="titre-principal"><span class="ie-titre-gros">${name}</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function noteRow(note, subject) {
+        const title = subject
+          ? `<div class="titre-principal">${subject}</div>`
+          : "";
+        return `
+          <div role="treeitem" aria-level="2" class="liste_contenu_cellule">
+            <div class="liste_contenu_cellule_contenu">
+              <div class="liste_contenu_ligne">
+                <div class="zone-gauche">
+                  <time class="date-contain"><span>${note.day}</span><span>${note.month}</span></time>
+                </div>
+                <div class="zone-centrale">
+                  <div class="zone-contenu-format">
+                    <div class="zone-principale">${title}</div>
+                    <div class="zone-complementaire">
+                      <div class="flex-contain flex-gap flex-center">
+                        <span class="note-devoir" aria-label="Note élève : ${note.text}">${note.text}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      const tree = document.getElementById("tree");
+
+      if (view === "matiere") {
+        tree.innerHTML = SUBJECTS.map(
+          (subject) =>
+            subjectRow(subject.name) +
+            subject.notes.map((note) => noteRow(note)).join(""),
+        ).join("");
+      } else {
+        const chronological = SUBJECTS.flatMap((subject) =>
+          subject.notes.map((note) => ({ note, subject: subject.name })),
+        ).sort((a, b) => Number(b.note.day) - Number(a.note.day));
+        tree.innerHTML = chronological
+          .map((entry) => noteRow(entry.note, entry.subject))
+          .join("");
+      }
+    </script>
+    <script src="../extension/content.js"></script>
+  </body>
 </html>
