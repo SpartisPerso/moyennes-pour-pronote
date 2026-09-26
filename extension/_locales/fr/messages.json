@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Moyennes pour PRONOTE",
+    "description": "Nom de l'extension affiché dans le navigateur et les boutiques."
+  },
+  "extDescription": {
+    "message": "Calcule vos moyennes dans PRONOTE lorsque l'établissement ne les affiche pas : moyenne par matière et moyenne générale.",
+    "description": "Description courte affichée dans le navigateur et les boutiques."
+  }
+}
