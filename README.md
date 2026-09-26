@@ -18,7 +18,29 @@ Ces choix sont souvent motivés par la volonté de limiter la comparaison entre 
 - En vue **Par ordre chronologique**, toutes les moyennes sont regroupées dans l'encart.
 - En vue **Par matière**, la moyenne générale reste en haut et chaque moyenne est alignée à droite avec les notes.
 
-## Installation la plus simple
+## 🛠️ Installation
+
+### Depuis les boutiques d'extensions
+
+L'extension est **en cours de révision** sur les trois boutiques. Les liens d'installation seront ajoutés ici dès leur publication.
+
+En attendant, utilisez l'installation locale décrite plus bas.
+
+#### Mozilla Firefox
+
+En cours de révision sur addons.mozilla.org. Lien à venir.
+
+#### Google Chrome
+
+En cours de révision sur le Chrome Web Store. Lien à venir.
+
+#### Microsoft Edge
+
+En cours de révision sur Microsoft Edge Add-ons. Lien à venir.
+
+### Installation locale
+
+Cette méthode fonctionne dès maintenant, sur les trois navigateurs, sans attendre la publication en boutique.
 
 Le [guide d'installation pas à pas](GUIDE_INSTALLATION.md) est conçu pour les personnes qui connaissent peu l'informatique.
 
@@ -31,6 +53,8 @@ Téléchargez [**Moyennes-pour-PRONOTE.zip**](https://github.com/SpartisPerso/mo
 Le ZIP contient directement un sous-dossier `extension` prêt à être sélectionné dans le navigateur. Aucun fichier n'est copié ailleurs et aucune fenêtre ne s'ouvre automatiquement.
 
 Les navigateurs imposent trois actions manuelles pour une extension qui n'est pas installée depuis une boutique : activer le mode développeur, charger l'extension décompressée et sélectionner son dossier.
+
+Conservez le dossier extrait après l'installation : le navigateur lit directement son contenu.
 
 ## Calcul effectué
 
