@@ -1,3 +1,13 @@
+<p align="center">
+  <img src="store/promo-1400x560.png" alt="Moyennes pour PRONOTE" width="760">
+</p>
+
+<p align="center">
+  <a href="https://microsoftedge.microsoft.com/addons/detail/moyennes-pour-pronote/ojbadlllbkeffagbklaklijmbplaiaaa"><img src="https://img.shields.io/badge/Microsoft%20Edge-Installer-0C59A4?style=for-the-badge&logo=microsoftedge&logoColor=white" alt="Installer sur Microsoft Edge"></a>
+  <a href="https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/"><img src="https://img.shields.io/badge/Firefox-En%20r%C3%A9vision-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox : en cours de révision"></a>
+  <img src="https://img.shields.io/badge/Chrome-En%20r%C3%A9vision-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome : en cours de révision">
+</p>
+
 # Moyennes pour PRONOTE
 
 Extension pour Microsoft Edge, Google Chrome et Mozilla Firefox. Elle affiche dans PRONOTE la moyenne de chaque matière et la moyenne générale estimée.
@@ -18,29 +28,39 @@ Ces choix sont souvent motivés par la volonté de limiter la comparaison entre 
 - En vue **Par ordre chronologique**, toutes les moyennes sont regroupées dans l'encart.
 - En vue **Par matière**, la moyenne générale reste en haut et chaque moyenne est alignée à droite avec les notes.
 
+## � Aperçu
+
+<p align="center">
+  <img src="store/screenshot-1-par-matiere.png" alt="Vue Par matière : la moyenne de chaque matière apparaît en face de son intitulé" width="760">
+</p>
+
+<p align="center">
+  <img src="store/screenshot-2-chronologique.png" alt="Vue Par ordre chronologique : toutes les moyennes sont regroupées dans un encart" width="760">
+</p>
+
+<p align="center"><em>Captures réalisées avec des données fictives.</em></p>
+
 ## 🛠️ Installation
 
 ### Depuis les boutiques d'extensions
 
-L'extension est **en cours de révision** sur les trois boutiques. Les liens d'installation seront ajoutés ici dès leur publication.
+#### <img src="https://img.shields.io/badge/-0C59A4?style=flat-square&logo=microsoftedge&logoColor=white" alt="" height="18"> Microsoft Edge
 
-En attendant, utilisez l'installation locale décrite plus bas.
+**Publiée.** [Installer depuis Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/moyennes-pour-pronote/ojbadlllbkeffagbklaklijmbplaiaaa)
 
-#### Mozilla Firefox
+#### <img src="https://img.shields.io/badge/-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="" height="18"> Mozilla Firefox
 
-En cours de révision sur addons.mozilla.org. Lien à venir.
+**En cours de révision.** L'adresse définitive sera : [addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote](https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/)
 
-#### Google Chrome
+Elle reste inaccessible tant que Mozilla n'a pas validé la publication.
 
-En cours de révision sur le Chrome Web Store. Lien à venir.
+#### <img src="https://img.shields.io/badge/-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="" height="18"> Google Chrome
 
-#### Microsoft Edge
-
-En cours de révision sur Microsoft Edge Add-ons. Lien à venir.
+**En cours de révision** sur le Chrome Web Store. Lien à venir.
 
 ### Installation locale
 
-Cette méthode fonctionne dès maintenant, sur les trois navigateurs, sans attendre la publication en boutique.
+Cette méthode reste utile pour Chrome et Firefox tant que leur fiche n'est pas publiée, et pour tester une version avant sa mise en ligne.
 
 Le [guide d'installation pas à pas](GUIDE_INSTALLATION.md) est conçu pour les personnes qui connaissent peu l'informatique.
 
