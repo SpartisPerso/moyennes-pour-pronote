@@ -28,7 +28,7 @@ Ces choix sont souvent motivés par la volonté de limiter la comparaison entre 
 - En vue **Par ordre chronologique**, toutes les moyennes sont regroupées dans l'encart.
 - En vue **Par matière**, la moyenne générale reste en haut et chaque moyenne est alignée à droite avec les notes.
 
-## � Aperçu
+## 🖼️ Aperçu
 
 <p align="center">
   <img src="store/screenshot-1-par-matiere.png" alt="Vue Par matière : la moyenne de chaque matière apparaît en face de son intitulé" width="760">
