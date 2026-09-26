@@ -16,6 +16,11 @@
         box-sizing: border-box;
       }
 
+      /* PRONOTE fixe la racine a 10px : content.css etant en rem, c'est indispensable. */
+      html {
+        font-size: 10px;
+      }
+
       body {
         margin: 0;
         background: #52585c;
@@ -23,9 +28,10 @@
         color: #000;
       }
 
+      /* Capture headless en 1648x1030 (16:10) puis reduction a 1280x800 : tout tient sans coupure. */
       #shot {
-        width: 1280px;
-        height: 800px;
+        width: 100vw;
+        height: 100vh;
         overflow: hidden;
         background: #fff;
         display: flex;
@@ -293,8 +299,8 @@
       }
 
       .liste-contain {
-        width: 640px;
-        flex: 0 0 640px;
+        width: 50%;
+        flex: 0 0 50%;
         display: flex;
         flex-direction: column;
         min-height: 0;
