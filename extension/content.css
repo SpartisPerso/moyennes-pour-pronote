@@ -73,6 +73,37 @@
   white-space: nowrap;
 }
 
+#pronote-moyennes-extension .pm-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e5ebe9;
+}
+
+#pronote-moyennes-extension .pm-options:last-child {
+  border-bottom: 0;
+}
+
+#pronote-moyennes-extension .pm-mode-label {
+  color: var(--pm-muted);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+#pronote-moyennes-extension .pm-mode-select {
+  max-width: 100%;
+  padding: 0.2rem 0.3rem;
+  color: #1d2926;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.25;
+  background: #ffffff;
+  border: 1px solid var(--pm-border);
+  border-radius: 3px;
+}
+
 #pronote-moyennes-extension .pm-list {
   padding: 0 1rem;
 }

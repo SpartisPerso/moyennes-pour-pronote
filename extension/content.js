@@ -3,6 +3,9 @@
 
   const ROOT_ID = "pronote-moyennes-extension";
   const INLINE_AVERAGE_CLASS = "pm-inline-average";
+  const WEIGHTING_KEY = "pronote-moyennes.ponderation";
+  const BY_SCALE = "bareme";
+  const EQUAL = "egal";
   const NOTE_LABEL_PATTERN = /Note\s+(?:de\s+l['’])?élève\s*:\s*([0-9]+(?:[,.][0-9]+)?)(?:\s*\/\s*([0-9]+(?:[,.][0-9]+)?))?/i;
   const numberFormatter = new Intl.NumberFormat("fr-FR", {
     minimumFractionDigits: 2,
@@ -11,6 +14,34 @@
 
   let lastSignature = "";
   let refreshTimer = 0;
+
+  // Stockage sur l'origine PRONOTE : evite de demander la permission "storage".
+  function readWeighting() {
+    try {
+      return localStorage.getItem(WEIGHTING_KEY) === EQUAL ? EQUAL : BY_SCALE;
+    } catch {
+      return BY_SCALE;
+    }
+  }
+
+  function writeWeighting(mode) {
+    try {
+      localStorage.setItem(WEIGHTING_KEY, mode);
+    } catch {
+      // Stockage indisponible : le choix vaut pour la session en cours.
+    }
+  }
+
+  function averageOf(notes, mode) {
+    if (mode === EQUAL) {
+      const sum = notes.reduce((total, note) => total + (note.value / note.scale) * 20, 0);
+      return sum / notes.length;
+    }
+
+    const totalValue = notes.reduce((total, note) => total + note.value, 0);
+    const totalScale = notes.reduce((total, note) => total + note.scale, 0);
+    return (totalValue / totalScale) * 20;
+  }
 
   function isVisible(element) {
     const style = getComputedStyle(element);
@@ -70,15 +101,11 @@
       }
 
       const notes = notesBySubject.get(subject) || [];
-      notes.push((value / scale) * 20);
+      notes.push({ value, scale });
       notesBySubject.set(subject, notes);
     }
 
-    return Array.from(notesBySubject, ([subject, notes]) => ({
-      subject,
-      noteCount: notes.length,
-      average: notes.reduce((sum, note) => sum + note, 0) / notes.length,
-    }));
+    return Array.from(notesBySubject, ([subject, notes]) => ({ subject, notes }));
   }
 
   function formatAverage(value) {
@@ -96,7 +123,30 @@
     return element;
   }
 
-  function buildPanel(subjects, generalAverage, showSubjectList) {
+  function buildModeRow(mode, onChange) {
+    const row = createElement("div", "pm-options");
+    const select = createElement("select", "pm-mode-select");
+    select.id = "pm-mode-select";
+
+    for (const [value, text] of [
+      [BY_SCALE, "Pondérées par leur barème"],
+      [EQUAL, "Toutes à poids égal"],
+    ]) {
+      const option = createElement("option", "", text);
+      option.value = value;
+      select.append(option);
+    }
+
+    select.value = mode;
+    select.addEventListener("change", () => onChange(select.value));
+
+    const label = createElement("label", "pm-mode-label", "Notes :");
+    label.htmlFor = select.id;
+    row.append(label, select);
+    return row;
+  }
+
+  function buildPanel(subjects, generalAverage, showSubjectList, mode, onModeChange) {
     const panel = createElement("section", "pm-panel");
     panel.id = ROOT_ID;
     panel.setAttribute("aria-label", "Moyennes estimées");
@@ -109,7 +159,9 @@
       createElement(
         "p",
         "pm-subtitle",
-        "Notes ramenées sur 20, matières de même poids",
+        mode === EQUAL
+          ? "Notes ramenées sur 20, matières de même poids"
+          : "Notes pondérées par leur barème, matières de même poids",
       ),
     );
 
@@ -120,7 +172,7 @@
     );
     header.append(headingGroup, general);
 
-    panel.append(header);
+    panel.append(header, buildModeRow(mode, onModeChange));
 
     if (showSubjectList) {
       const list = createElement("div", "pm-list");
@@ -194,6 +246,13 @@
     lastSignature = "";
   }
 
+  function changeWeighting(mode) {
+    writeWeighting(mode);
+    lastSignature = "";
+    refresh();
+    document.getElementById("pm-mode-select")?.focus();
+  }
+
   function refresh() {
     const tree = findNotesTree();
     if (!tree) {
@@ -201,18 +260,30 @@
       return;
     }
 
-    const subjects = parseVisibleNotes(tree);
-    if (subjects.length === 0) {
+    const parsed = parseVisibleNotes(tree);
+    if (parsed.length === 0) {
       removePanel();
       return;
     }
+
+    const mode = readWeighting();
+    const subjects = parsed.map(({ subject, notes }) => ({
+      subject,
+      noteCount: notes.length,
+      average: averageOf(notes, mode),
+    }));
 
     const generalAverage =
       subjects.reduce((sum, item) => sum + item.average, 0) / subjects.length;
     const isSubjectView = Boolean(
       tree.querySelector('[role="treeitem"][aria-level="1"]'),
     );
-    const signature = JSON.stringify({ subjects, generalAverage, isSubjectView });
+    const signature = JSON.stringify({
+      subjects,
+      generalAverage,
+      isSubjectView,
+      mode,
+    });
     const existingPanel = document.getElementById(ROOT_ID);
     const inlineAverageCount = tree.querySelectorAll(
       `.${INLINE_AVERAGE_CLASS}`,
@@ -231,7 +302,13 @@
     } else {
       removeInlineAverages();
     }
-    const panel = buildPanel(subjects, generalAverage, !isSubjectView);
+    const panel = buildPanel(
+      subjects,
+      generalAverage,
+      !isSubjectView,
+      mode,
+      changeWeighting,
+    );
     const insertionPoint = tree.parentElement || document.querySelector("main");
     insertionPoint?.prepend(panel);
     lastSignature = signature;

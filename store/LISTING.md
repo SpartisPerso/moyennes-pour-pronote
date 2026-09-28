@@ -43,16 +43,19 @@ Si votre établissement affiche déjà les moyennes, cette extension ne vous ser
 
 COMMENT ÇA MARCHE
 
-L'extension lit uniquement les notes déjà affichées dans votre propre page, puis :
-- ramène chaque note sur 20 en tenant compte du barème affiché (une note sur 10 vaut le double) ;
-- calcule la moyenne de chaque matière ;
-- calcule la moyenne générale à partir des moyennes de matières.
+L'extension lit uniquement les notes déjà affichées dans votre propre page, puis calcule la moyenne de chaque matière et la moyenne générale.
+
+Deux méthodes de calcul sont proposées, au choix dans l'encart :
+- « Pondérées par leur barème » (par défaut) : les points obtenus sont rapportés au total des points possibles, donc une note sur 10 compte moitié moins qu'une note sur 20. Avec 15,50/20 et 9,00/10, la moyenne vaut 16,33.
+- « Toutes à poids égal » : chaque note est d'abord ramenée sur 20 et toutes comptent pareil. Avec les mêmes notes, la moyenne vaut 16,75.
+
+Le choix est mémorisé pour votre établissement.
 
 En affichage « Par ordre chronologique », un encart regroupe toutes les moyennes. En affichage « Par matière », la moyenne générale reste en haut et la moyenne de chaque matière s'affiche en face de son intitulé, alignée avec les notes.
 
 IMPORTANT : UNE ESTIMATION, PAS UNE MOYENNE OFFICIELLE
 
-L'extension applique un poids identique à chaque note et à chaque matière. PRONOTE, lui, applique les coefficients définis par les professeurs et l'établissement. Les résultats affichés sont donc une estimation, qui peut différer des moyennes officielles, notamment si des coefficients particuliers sont utilisés.
+L'extension applique un poids identique à chaque matière et ne connaît pas les coefficients des devoirs. PRONOTE, lui, applique les coefficients définis par les professeurs et l'établissement. Les résultats affichés sont donc une estimation, qui peut différer des moyennes officielles, notamment si des coefficients particuliers sont utilisés.
 
 CONFIDENTIALITÉ
 
