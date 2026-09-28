@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://microsoftedge.microsoft.com/addons/detail/moyennes-pour-pronote/ojbadlllbkeffagbklaklijmbplaiaaa"><img src="https://img.shields.io/badge/Microsoft%20Edge-Installer-0C59A4?style=for-the-badge&logo=microsoftedge&logoColor=white" alt="Installer sur Microsoft Edge"></a>
   <a href="https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/"><img src="https://img.shields.io/badge/Firefox-En%20r%C3%A9vision-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox : en cours de révision"></a>
-  <img src="https://img.shields.io/badge/Chrome-En%20r%C3%A9vision-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome : en cours de révision">
+  <a href="https://chromewebstore.google.com/detail/moyennes-pour-pronote/lifbhekomedcmnpkgbcicjodhcfbdoei"><img src="https://img.shields.io/badge/Chrome-Installer-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Installer sur Google Chrome"></a>
 </p>
 
 # Moyennes pour PRONOTE
@@ -56,11 +56,11 @@ Elle reste inaccessible tant que Mozilla n'a pas validé la publication.
 
 #### <img src="https://img.shields.io/badge/-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="" height="18"> Google Chrome
 
-**En cours de révision** sur le Chrome Web Store. Lien à venir.
+**Publiée.** [Installer depuis le Chrome Web Store](https://chromewebstore.google.com/detail/moyennes-pour-pronote/lifbhekomedcmnpkgbcicjodhcfbdoei)
 
 ### Installation locale
 
-Cette méthode reste utile pour Chrome et Firefox tant que leur fiche n'est pas publiée, et pour tester une version avant sa mise en ligne.
+Cette méthode reste utile pour Firefox tant que sa fiche n'est pas publiée, et pour tester une version avant sa mise en ligne.
 
 Le [guide d'installation pas à pas](GUIDE_INSTALLATION.md) est conçu pour les personnes qui connaissent peu l'informatique.
 
