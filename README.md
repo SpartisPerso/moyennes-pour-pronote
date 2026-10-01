@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://microsoftedge.microsoft.com/addons/detail/moyennes-pour-pronote/ojbadlllbkeffagbklaklijmbplaiaaa"><img src="https://img.shields.io/badge/Microsoft%20Edge-Installer-0C59A4?style=for-the-badge&logo=microsoftedge&logoColor=white" alt="Installer sur Microsoft Edge"></a>
-  <a href="https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/"><img src="https://img.shields.io/badge/Firefox-En%20r%C3%A9vision-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox : en cours de révision"></a>
+  <a href="https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/"><img src="https://img.shields.io/badge/Firefox-Installer-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Installer sur Mozilla Firefox"></a>
   <a href="https://chromewebstore.google.com/detail/moyennes-pour-pronote/lifbhekomedcmnpkgbcicjodhcfbdoei"><img src="https://img.shields.io/badge/Chrome-Installer-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Installer sur Google Chrome"></a>
 </p>
 
@@ -50,9 +50,7 @@ Ces choix sont souvent motivés par la volonté de limiter la comparaison entre 
 
 #### <img src="https://img.shields.io/badge/-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="" height="18"> Mozilla Firefox
 
-**En cours de révision.** L'adresse définitive sera : [addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote](https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/)
-
-Elle reste inaccessible tant que Mozilla n'a pas validé la publication.
+**Publiée.** [Installer depuis Firefox Browser Add-ons](https://addons.mozilla.org/fr/firefox/addon/moyennes-pour-pronote/)
 
 #### <img src="https://img.shields.io/badge/-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="" height="18"> Google Chrome
 
@@ -60,7 +58,7 @@ Elle reste inaccessible tant que Mozilla n'a pas validé la publication.
 
 ### Installation locale
 
-Cette méthode reste utile pour Firefox tant que sa fiche n'est pas publiée, et pour tester une version avant sa mise en ligne.
+L'extension est publiée sur les trois boutiques. Cette méthode sert à tester une version avant sa mise en ligne, ou à installer une version plus récente que celle actuellement distribuée.
 
 Le [guide d'installation pas à pas](GUIDE_INSTALLATION.md) est conçu pour les personnes qui connaissent peu l'informatique.
 
